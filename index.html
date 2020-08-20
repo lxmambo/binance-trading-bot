@@ -8,10 +8,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <title>Binance Trading Bot</title>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
-    <h2>Binance Trading Bot</h2>
-    <span id = "trades">Trades</span>
-<script src="js/main.js"></script>
+    <div class="container">
+        <div class="price-box">
+            <h2>Binance Trading Bot</h2>
+            <span id = "trades">Trades</span>
+        </div>
+        <div class="chart-box" id="chart"></div>
+        <div class="indicators" id="settings">
+            <h2>Settings</h2>
+            <label for="rsi">RSI</label>
+            <input type="text" name="rsi">
+        </div>
+    </div>
+    <script src="js/chart.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
