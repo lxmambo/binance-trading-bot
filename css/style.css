@@ -26,12 +26,11 @@ body {
 
 }
 
-.container > div {
-    height: 210px;
-    background: url('img/img1.jpg');
-    background-size: cover;
-    background-attachment: fixed;
-
+.indicators {
+    text-align: left;
+    justify-content: left;
+    font-size: 1rem;
+    color: #ffffff;
 }
 
 h2 {

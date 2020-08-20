@@ -19,8 +19,18 @@
         <div class="chart-box" id="chart"></div>
         <div class="indicators" id="settings">
             <h2>Settings</h2>
-            <label for="rsi">RSI</label>
-            <input type="text" name="rsi">
+            <input type="checkbox">
+            <span>RSI</span>
+            <br>
+            <label for="rsi_length">RSI Length</label>
+            <input type="text" id="rsi_length"name="rsi_length" placeholder="14">
+            <br>
+            <label for="rsi_oversold">RSI Oversold</label>
+            <input type="text" id="rsi_oversold" name="rsi_oversold" placeholder="30">
+            <br>
+            <label for="rsi_overbought">RSI Overbought</label>
+            <input type="text" id="rsi_overbought" name="rsi_overbought" placeholder="70">
+            
         </div>
     </div>
     <script src="js/chart.js"></script>
