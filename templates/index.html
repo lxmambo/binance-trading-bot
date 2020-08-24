@@ -1,0 +1,152 @@
+<!--Work in progress. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+   <!--<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">-->
+    <style>
+        div {
+            margin: 20px;
+        }
+        .buy-sell {
+            border:solid gray 1px; width: 600px;
+        }
+        h3{
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .flash-error {
+            padding: 10px;
+            border: solid red 1px; color:red;
+            background-color: pink;
+            margin-bottom: 15px;
+        }
+    </style>
+    <title>Binance Trading Bot</title>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="price-box">
+            <h2>{{ title }}</h2>
+            <span id = "trades" >BTC price</span>
+        </div>
+        <div>
+            <p>Get Exchange Info</p>
+            <form action="/exchange-info" method = "post">
+                <input type="submit" name="get_info" value = "Get Info">
+            </form>
+        </div>
+        <div class="buy-sell">
+            <h3>Buy Crypto</h3>
+            <div class="flash-error">
+                <!--display flask flash messages-->
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+            <p>Binance has {{ symbols|length }} pairs listed</p>
+            <!--we are going to post to the 'buy' route. We have get requests an post requests
+            when we send data to a server from a form it's a post request-->
+            <form action="/buy" method="post">
+                <select name="symbol" id="symbol">
+                    {% for symbol in symbols %}
+                        <option>{{ symbol['symbol'] }}</option>
+                    {% endfor %}
+                </select>
+                <input type="text" id="quantity" name="quantity" placeholder="quantity"/>
+                <input type="submit" name="buy" value="buy"/>
+            </form>
+        </div>
+        <div class="buy-sell">
+            <h3>Sell Crypto</h3>
+            <div class="flash-error">
+                <!--display flask flash messages-->
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+            <p>Binance has {{ symbols|length }} pairs listed</p>
+            <!--we are going to post to the 'buy' route. We have get requests an post requests
+            when we send data to a server from a form it's a post request-->
+            <form action="/sell" method="post">
+                <select name="symbol" id="symbol">
+                    {% for symbol in symbols %}
+                        <option>{{ symbol['symbol'] }}</option>
+                    {% endfor %}
+                </select>
+                <input type="text" id="quantity" name="quantity" placeholder="quantity"/>
+                <input type="submit" name="sell" value="sell"/>
+            </form>
+        </div>
+        <div class="chart-box" id="chart"></div>
+        <h1>Candlestick Screener</h1>
+        
+        <div>
+            <form action="/candlestick-patterns" method = "post">
+                <select name="pattern" id="pattern">
+                    {% for pattern in patterns%}
+                    <option value="{{pattern}}" {% if pattern == current_pattern %} selected = "selected" {% endif %}>{{patterns[pattern]}}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="scan">
+            </form>
+        </div>
+
+        <div id="my_balances">
+            <p>My Crypto</p>
+            <table>
+                <th>Asset</th>
+                <th>Quantity</th>
+                {% for balances in my_balances %}
+                    {% if balances['free'] != 0 %}
+                    <tr>
+                        <td>
+                            {{ balances['asset'] }}
+                        </td>
+                        <td>
+                            {{ balances['free'] }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        
+        <div class="indicators" id="settings">
+            <h3>Indicators and Strategies</h3>
+            <input type="checkbox">
+            <span>RSI</span>
+            <br>
+            <label for="rsi_length">RSI Length</label>
+            <input type="text" id="rsi_length"name="rsi_length" placeholder="14">
+            <br>
+            <label for="rsi_oversold">RSI Oversold</label>
+            <input type="text" id="rsi_oversold" name="rsi_oversold" placeholder="30">
+            <br>
+            <label for="rsi_overbought">RSI Overbought</label>
+            <input type="text" id="rsi_overbought" name="rsi_overbought" placeholder="70">
+            <form action="/SMA100" method = "post">
+                <input type="submit" value="SMA 100 cross">
+            </form>
+            
+
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='chart.js') }}"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+    
+    <!--to access files in the static folder using flask-->
+</body>
+</html>
