@@ -1,6 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+body {
+    background-color: #1c223b;
+    color: #fff;
+    font-family: 'Source Sans Pro', 'sans-serif';
+    height: 100vh;
+    margin: 0;
+}
+
+.container h1{
+    margin-left:10px;
+    margin-top:10px;
+}
+
+.chart-box{
+    margin-top:10px;
+    margin-left:10px;
+    width:640px;
+}
+
+.buy-sell{
+    display:flex;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    justify-content: flex-start;
+}
+
+.buy, .sell{
+    border:solid #273349 1px;
+    width: 290px;
+    background-color: #273349;
+}
+
+.sell{
+    margin-left: 10px;
+}
+
+.flash-error {
+    padding: 10px;
+    background-color: pink;
+    margin-bottom: 15px;
+    color: red;
+}
+
+.exchange-info{
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+
+}
+
+.exchange-info span{
+    margin-left: 10px;
+    margin-right: 100px;
+}
+
+.btn{
+    margin-left:10px;
+}
+
+.candlestick-screener{
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.pattern-form{
+    margin-top:10px;
+}
+
+.pattern-form input{
+    margin-left: 10px;
+}
+
+.large-container{
+    display: flex;
+    justify-content: space-around;
+    background-color: #273349;
+    border-radius: 30px;
+    box-shadow: 0 5px 10px rgba(12,16,31,0.4);
+    padding: 20px 60px 20px 60px;
+    margin: 10px auto auto auto;
+    width: 1000px;
+
+}
+
+#my_balances h3{
+    margin-top:20px;
+    margin-bottom:10px;
+}
+
+#my_balances{
+    text-align: left;
+}
+
+.indicators{
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.indicators h3{
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+.container
+{
+
+}
+
+table {
+    color: #e2e2e2;
+    
+    width: 100%;
+}
+
+table th,
+table td {
+    padding: 15px;
+    text-align: left;
+}
+
+table tbody tr{
+    background-color: #1c223b;
+}
+
+table tbody tr:hover{
+    background-color: #151b31;
+    box-shadow: 0 3px 5 px rgba(0,0,0,0,2);
+}
+
+table tbody tr td:first-of-type {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+table tbody tr td:last-of-type {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-align: center;
+}

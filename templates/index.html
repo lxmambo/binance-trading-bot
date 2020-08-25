@@ -6,41 +6,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-   <!--<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">-->
-    <style>
-        div {
-            margin: 20px;
-        }
-        .buy-sell {
-            border:solid gray 1px; width: 600px;
-        }
-        h3{
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-        .flash-error {
-            padding: 10px;
-            border: solid red 1px; color:red;
-            background-color: pink;
-            margin-bottom: 15px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Binance Trading Bot</title>
     <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
+    <div class="large-container">
     <div class="container">
-        <div class="price-box">
-            <h2>{{ title }}</h2>
-            <span id = "trades" >BTC price</span>
-        </div>
-        <div>
-            <p>Get Exchange Info</p>
+        <h1>{{ title }}</h1>
+        
+        <div class="chart-box" id="chart"></div>
+        
+        <div class="exchange-info">
+            <h3>BTC price:</h3>
+            <span id = "trades">BTC price</span>
+            <h3>Get Exchange Info</h3>
             <form action="/exchange-info" method = "post">
-                <input type="submit" name="get_info" value = "Get Info">
+                <input type="submit" name="get_info" value = "Get Info" class="btn">
             </form>
         </div>
+        
         <div class="buy-sell">
+        <div class="buy">
             <h3>Buy Crypto</h3>
             <div class="flash-error">
                 <!--display flask flash messages-->
@@ -62,10 +49,10 @@
                     {% endfor %}
                 </select>
                 <input type="text" id="quantity" name="quantity" placeholder="quantity"/>
-                <input type="submit" name="buy" value="buy"/>
+                <input type="submit" name="buy" value="Buy"/>
             </form>
         </div>
-        <div class="buy-sell">
+        <div class="sell">
             <h3>Sell Crypto</h3>
             <div class="flash-error">
                 <!--display flask flash messages-->
@@ -87,41 +74,21 @@
                     {% endfor %}
                 </select>
                 <input type="text" id="quantity" name="quantity" placeholder="quantity"/>
-                <input type="submit" name="sell" value="sell"/>
+                <input type="submit" name="sell" value="Sell"/>
             </form>
         </div>
-        <div class="chart-box" id="chart"></div>
-        <h1>Candlestick Screener</h1>
-        
-        <div>
-            <form action="/candlestick-patterns" method = "post">
+        </div>
+   
+        <div class="candlestick-screener">
+            <h2>Candlestick Screener</h2>
+            <form action="/candlestick-patterns" method = "post" class="pattern-form">
                 <select name="pattern" id="pattern">
                     {% for pattern in patterns%}
                     <option value="{{pattern}}" {% if pattern == current_pattern %} selected = "selected" {% endif %}>{{patterns[pattern]}}</option>
                     {% endfor %}
                 </select>
-                <input type="submit" value="scan">
+                <input type="submit" value="Scan">
             </form>
-        </div>
-
-        <div id="my_balances">
-            <p>My Crypto</p>
-            <table>
-                <th>Asset</th>
-                <th>Quantity</th>
-                {% for balances in my_balances %}
-                    {% if balances['free'] != 0 %}
-                    <tr>
-                        <td>
-                            {{ balances['asset'] }}
-                        </td>
-                        <td>
-                            {{ balances['free'] }}
-                        </td>
-                    </tr>
-                    {% endif %}
-                {% endfor %}
-            </table>
         </div>
         
         <div class="indicators" id="settings">
@@ -143,6 +110,28 @@
             
 
         </div>
+    </div>
+    <div id="my_balances">
+        <h3>My Crypto</h3>
+        <table>
+            <th>Asset</th>
+            <th>Quantity</th>
+            {% for balances in my_balances %}
+
+
+                {% if balances['free'] != 0 -%}
+                <tr>
+                    <td>
+                        {{ balances['asset'] }}
+                    </td>
+                    <td>
+                        {{ balances['free'] }}
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+    </div>
     </div>
     <script src="{{ url_for('static', filename='chart.js') }}"></script>
     <script src="{{ url_for('static', filename='main.js') }}"></script>
