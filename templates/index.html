@@ -11,6 +11,7 @@
     <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
+    
     <div class="large-container">
     <div class="container">
         <h1>{{ title }}</h1>
@@ -106,20 +107,18 @@
             <input type="text" id="rsi_overbought" name="rsi_overbought" placeholder="70">
             <form action="/SMA100" method = "post">
                 <input type="submit" value="SMA 100 cross">
-            </form>
-            
-
+            </form>        
         </div>
+        
     </div>
+   
     <div id="my_balances">
         <h3>My Crypto</h3>
         <table>
             <th>Asset</th>
             <th>Quantity</th>
             {% for balances in my_balances %}
-
-
-                {% if balances['free'] != 0 -%}
+                {% if balances['free']|float() > 0 %}
                 <tr>
                     <td>
                         {{ balances['asset'] }}
@@ -132,10 +131,10 @@
             {% endfor %}
         </table>
     </div>
+
     </div>
     <script src="{{ url_for('static', filename='chart.js') }}"></script>
-    <script src="{{ url_for('static', filename='main.js') }}"></script>
-    
+    <script src="{{ url_for('static', filename='main.js') }}"></script> 
     <!--to access files in the static folder using flask-->
 </body>
 </html>

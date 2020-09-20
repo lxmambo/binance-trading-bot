@@ -11,7 +11,7 @@ client = Client(config.API_KEY, config.API_SECRET)
 #used in the part of the code to save a file with stream data
 #candles = client.get_klines(symbol='BTCUSDT', interval=Client.KLINE_INTERVAL_15MINUTE)
 
-csvfile = open('2012-2020_5MINUTE.csv','w',newline='')
+csvfile = open('daily.csv','w',newline='')
 candlestick_writer = csv.writer(csvfile,delimiter = ',')
 
 #the code below is to write the stream in a csv file
@@ -20,7 +20,7 @@ candlestick_writer = csv.writer(csvfile,delimiter = ',')
 #    candlestick_writer.writerow(candlestick)
 #print(len(candles))
 
-candlesticks = client.get_historical_klines("BTCUSDT", Client.KLINE_INTERVAL_1DAY,"1 Jan, 2012","24 May, 2020")
+candlesticks = client.get_historical_klines("BTCUSDT", Client.KLINE_INTERVAL_1DAY,"1 Jan, 2012","26 Aug, 2020")
 for candlestick in candlesticks:
     candlestick_writer.writerow(candlestick)
 csvfile.close()

@@ -88,7 +88,7 @@ def exchangeInfo():
         print(pair['symbol'])
         csvfile = open('datasets/daily/{}.csv'.format(pair['symbol']),'w',newline='')
         candlestick_writer = csv.writer(csvfile,delimiter = ',')
-        candlesticks = client.get_historical_klines("{}".format(pair['symbol']), Client.KLINE_INTERVAL_1DAY,"1 Jan, 2012","24 Aug, 2020")  
+        candlesticks = client.get_historical_klines("{}".format(pair['symbol']), Client.KLINE_INTERVAL_1DAY,"1 Jan, 2012","25 Aug, 2020")  
         
         str1 = ['Time','Open','High','Low','Close','Volume','CloseTime','QuoteVolume','NumberOfTrades','TBBase','TBQuote','Ignored']
         candlestick_writer.writerow(str1)
@@ -154,7 +154,7 @@ def candlestickPatterns():
 
 @app.route('/history')
 def history():
-    candlesticks = client.get_historical_klines("BTCUSDT", Client.KLINE_INTERVAL_1DAY,"1 Jan, 2012","24 Aug, 2020") 
+    candlesticks = client.get_historical_klines("BTCUSDT", Client.KLINE_INTERVAL_1DAY,"1 Jan, 2012","25 Aug, 2020") 
     
     #empty list
     processed_candlesticks = []
