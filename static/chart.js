@@ -33,24 +33,27 @@ var candleSeries = chart.addCandlestickSeries({
   wickUpColor: '#00ff00',
 });
 
+
 //The data must come from the back end. We need to Fetch it.
-fetch('http://localhost:5000/history')
+//We gonna fetch, and then we get a response 'r'
+fetch('http://localhost/5000/history')
 	.then((r) => r.json())
 	.then((response) => {
-		console.log(response)
+		//console.log(response);
 		candleSeries.setData(response);
 	})
+//arguments i searched but were not necessary in the end
+//{header: {'Access-Control-Allow-Origin':'*'}, mode:'no-cors', method:'GET'}
 
-var binanceSocket = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@kline_1d");
-
-binanceSocket.onmensage = function(event){
+var binanceSocket2 = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@kline_1D");
+binanceSocket2.onmensage = function(event){
 	
 //we are going to retrieve the message object coming backgroundColor
 	var message = JSON.parse(event.data);
 	var candlestick = message.k;
 	console.log(candlestick)
 	//update function from lightweight. if time is the same, it updates
-	candleSeries.upadate({
+	candleSeries.update({
 		time:candlestick.t/1000,
 		open: candlestick.o,
 		high: candlestick.h,

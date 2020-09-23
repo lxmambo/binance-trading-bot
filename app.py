@@ -1,6 +1,6 @@
-#this file contains the web application
 from flask import Flask, render_template, request, flash, redirect, jsonify
-#to display the template we need the render_template function
+#<- to display the template we need the render_template function
+from flask_cors import CORS
 import config, csv
 from binance.client import Client
 #to import constants like SIDE_BUY, etc
@@ -13,22 +13,22 @@ import numpy
 
 #our app is a flask object
 app = Flask(__name__)
+cors = CORS(app)
 #in flask when using forms we need to give a secret key
 #it could be defined in config
 app.secret_key = 'fhfahflsdkaçlfhafsdkhfdshfdfoeurieubdk'
 
-client = Client(config.API_KEY, config.API_SECRET, tld="com")
+client = Client(config.API_KEY, config.API_SECRET)
 
 #define some routes and a function to call
 #when that route is accessed from the browser
 @app.route('/')
 def index():
-    title = 'Binance Trading Bot v2'
+    title = 'Binance Trading Terminal'
     account = client.get_account()
-    balances = account['balances']
-
     exchange_info = client.get_exchange_info()
-    symbols = exchange_info['symbols'] #let's pass it to the template too
+    balances = account['balances']
+    symbols = exchange_info['symbols']
 
     #taken from the trading bot v1 app. This allow to maintain current pattern.
     pattern = request.args.get('pattern',None)
@@ -135,12 +135,8 @@ def candlestickPatterns():
         except:
             pass
     #return render_template('index.html', patterns=patterns, stocks=stocks, current_pattern = pattern)
-
-
-
-
-
     return redirect('/')
+
 #set FLASK_APP = app.py
 #set FLASK_ENV=development
 #flask run
@@ -152,11 +148,20 @@ def candlestickPatterns():
 #activating the debug mode with the set FLASK_ENV=development
 #instruction
 
+#let's initialize the candlestick chart with historical data and
+#then we stream and add addional candlesticks
+#we have python code to retrieve candlestick historical information 
+#and write it in a csv file, we now want a function to write the 
+#info in JSON format and wrap it up in a flask endpoint that our
+#web UI can make a fetch request to, fetch the data and build the
+#chart dinamically
 @app.route('/history')
 def history():
-    candlesticks = client.get_historical_klines("BTCUSDT", Client.KLINE_INTERVAL_1DAY,"1 Jan, 2012","25 Aug, 2020") 
-    
-    #empty list
+    candlesticks = client.get_historical_klines("BTCUSDT", Client.KLINE_INTERVAL_1DAY,"1 Jan, 2012","22 Sep, 2020") 
+    #candlesticks is a python list we need to return our end
+    #result in JASON format. We will do that with jasonify
+
+    #empty list (in the end we need a list of objects)
     processed_candlesticks = []
 
     for data in candlesticks:
@@ -169,11 +174,9 @@ def history():
             "low": data[3],
             "close": data[4] 
         }
-    #this will give us a diferent structure to the data
-    #instead of a list of lists now we will have a list of objcets
+        #this will give us a diferent structure to the data
+        #instead of a list of lists now we will have a list of objcets
         processed_candlesticks.append(candlestick)
-    
-    #os lightweights charts do trading view want a unix timestamp
     
     return jsonify(processed_candlesticks)
 
@@ -216,9 +219,4 @@ def crossMA():
         except:
             pass
     #return render_template('index.html', patterns=patterns, stocks=stocks, current_pattern = pattern)
-
-
-
-
-
     return redirect('/')

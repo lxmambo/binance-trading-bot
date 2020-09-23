@@ -6,9 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>Binance Trading Bot</title>
+    <!--<link rel="stylesheet" href="/static/css/style.css">-->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <!--{{ url_for('static', filename='style.css') }}-->
     <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <title>Binance Trading Bot</title>
 </head>
 <body>
     
@@ -20,7 +22,7 @@
         
         <div class="exchange-info">
             <h3>BTC price:</h3>
-            <span id = "trades">BTC price</span>
+            <span id = "trades"></span>
             <h3>Get Exchange Info</h3>
             <form action="/exchange-info" method = "post">
                 <input type="submit" name="get_info" value = "Get Info" class="btn">

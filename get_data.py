@@ -1,3 +1,5 @@
+#this code is used in the app.py file too
+
 import config, csv
 from binance.client import Client
 
@@ -9,6 +11,7 @@ client = Client(config.API_KEY, config.API_SECRET)
 #    print(price)
 
 #used in the part of the code to save a file with stream data
+#get_klines return 500 candlesticks in a list of lists
 #candles = client.get_klines(symbol='BTCUSDT', interval=Client.KLINE_INTERVAL_15MINUTE)
 
 csvfile = open('daily.csv','w',newline='')
@@ -20,7 +23,7 @@ candlestick_writer = csv.writer(csvfile,delimiter = ',')
 #    candlestick_writer.writerow(candlestick)
 #print(len(candles))
 
-candlesticks = client.get_historical_klines("BTCUSDT", Client.KLINE_INTERVAL_1DAY,"1 Jan, 2012","26 Aug, 2020")
+candlesticks = client.get_historical_klines("BTCUSDT", Client.KLINE_INTERVAL_1DAY,"1 Jan, 2012","22 Sep, 2020")
 for candlestick in candlesticks:
     candlestick_writer.writerow(candlestick)
 csvfile.close()
